@@ -1,5 +1,5 @@
 {
-  "npmScope": "coast2coast-react",
+  "npmScope": "coast2coast",
   "affected": {
     "defaultBase": "master"
   },
@@ -16,19 +16,44 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
+        "parallel": 1
       }
     }
   },
-  "projects": {
-    "coast2coast": {
-      "tags": []
-    },
-    "coast2coast-e2e": {
-      "tags": [],
-      "implicitDependencies": ["coast2coast"]
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "defaultProject": "coast2coast",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "css",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "css"
+      },
+      "library": {
+        "style": "css",
+        "linter": "eslint"
+      }
     }
   }
 }

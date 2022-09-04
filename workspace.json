@@ -1,124 +1,110 @@
 {
-  "version": 1,
-  "projects": {
-    "coast2coast": {
-      "root": "apps/coast2coast",
-      "sourceRoot": "apps/coast2coast/src",
-      "projectType": "application",
-      "schematics": {},
-      "architect": {
-        "build": {
-          "builder": "@nrwl/web:build",
-          "options": {
-            "outputPath": "dist/apps/coast2coast",
-            "index": "apps/coast2coast/src/index.html",
-            "main": "apps/coast2coast/src/main.tsx",
-            "polyfills": "apps/coast2coast/src/polyfills.ts",
-            "tsConfig": "apps/coast2coast/tsconfig.app.json",
-            "assets": [
-              "apps/coast2coast/src/favicon.ico",
-              "apps/coast2coast/src/assets"
-            ],
-            "styles": ["apps/coast2coast/src/styles.css"],
-            "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/coast2coast/src/environments/environment.ts",
-                  "with": "apps/coast2coast/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "coast2coast:build"
-          },
-          "configurations": {
-            "production": {
-              "buildTarget": "coast2coast:build:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/coast2coast/**/*.{ts,tsx,js,jsx}"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/coast2coast/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "coast2coast-e2e": {
-      "root": "apps/coast2coast-e2e",
-      "sourceRoot": "apps/coast2coast-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/coast2coast-e2e/cypress.json",
-            "tsConfig": "apps/coast2coast-e2e/tsconfig.e2e.json",
-            "devServerTarget": "coast2coast:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "coast2coast:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/coast2coast-e2e/**/*.{js,ts}"]
-          }
-        }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/react"
-  },
-  "schematics": {
-    "@nrwl/react": {
-      "application": {
-        "style": "css",
-        "linter": "eslint",
-        "babel": true
-      },
-      "component": {
-        "style": "css"
-      },
-      "library": {
-        "style": "css",
-        "linter": "eslint"
-      }
-    }
-  },
-  "defaultProject": "coast2coast"
+	"version": 1,
+	"projects": {
+		"coast2coast": {
+			"root": "apps/coast2coast",
+			"sourceRoot": "apps/coast2coast/src",
+			"projectType": "application",
+			"schematics": {},
+			"architect": {
+				"build": {
+					"builder": "@nrwl/web:webpack",
+					"options": {
+						"outputPath": "dist/apps/coast2coast",
+						"index": "apps/coast2coast/src/index.html",
+						"main": "apps/coast2coast/src/main.tsx",
+						"polyfills": "apps/coast2coast/src/polyfills.ts",
+						"tsConfig": "apps/coast2coast/tsconfig.app.json",
+						"assets": ["apps/coast2coast/src/favicon.ico", "apps/coast2coast/src/assets"],
+						"styles": ["apps/coast2coast/src/styles.css"],
+						"scripts": [],
+						"webpackConfig": "@nrwl/react/plugins/webpack"
+					},
+					"configurations": {
+						"production": {
+							"fileReplacements": [
+								{
+									"replace": "apps/coast2coast/src/environments/environment.ts",
+									"with": "apps/coast2coast/src/environments/environment.prod.ts"
+								}
+							],
+							"optimization": true,
+							"outputHashing": "all",
+							"sourceMap": false,
+							"extractCss": true,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "2mb",
+									"maximumError": "5mb"
+								}
+							]
+						}
+					}
+				},
+				"serve": {
+					"builder": "@nrwl/web:dev-server",
+					"options": {
+						"buildTarget": "coast2coast:build"
+					},
+					"configurations": {
+						"production": {
+							"buildTarget": "coast2coast:build:production"
+						},
+						"development": {
+							"buildTarget": "coast2coast:build:development"
+						}
+					},
+					"defaultConfiguration": "development"
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": ["apps/coast2coast/**/*.{ts,tsx,js,jsx}"]
+					},
+					"outputs": ["{options.outputFile}"]
+				},
+				"test": {
+					"builder": "@nrwl/jest:jest",
+					"options": {
+						"jestConfig": "apps/coast2coast/jest.config.ts",
+						"passWithNoTests": true
+					}
+				}
+			},
+			"tags": []
+		},
+		"coast2coast-e2e": {
+			"root": "apps/coast2coast-e2e",
+			"sourceRoot": "apps/coast2coast-e2e/src",
+			"projectType": "application",
+			"architect": {
+				"e2e": {
+					"builder": "@nrwl/cypress:cypress",
+					"options": {
+						"cypressConfig": "apps/coast2coast-e2e/cypress.json",
+						"tsConfig": "apps/coast2coast-e2e/tsconfig.e2e.json",
+						"devServerTarget": "coast2coast:serve"
+					},
+					"configurations": {
+						"production": {
+							"devServerTarget": "coast2coast:serve:production"
+						}
+					}
+				},
+				"lint": {
+					"builder": "@nrwl/linter:eslint",
+					"options": {
+						"lintFilePatterns": ["apps/coast2coast-e2e/**/*.{js,ts}"]
+					},
+					"outputs": ["{options.outputFile}"]
+				}
+			},
+			"tags": [],
+			"implicitDependencies": ["coast2coast"]
+		}
+	}
 }
